@@ -29,8 +29,5 @@ Your LeetCode cookies are as sensitive as a password. They are stored only as en
 ## Disclaimer
 This is an unofficial tool. It uses undocumented LeetCode endpoints that can change without notice, and it is not affiliated with LeetCode. Automated access may be restricted by LeetCode's terms, so use it at your own risk and keep request volume low.
 
-## Alternatives
-[LeetHub](https://github.com/QasimWani/LeetHub) is a browser extension that pushes on submit.
-
 ## License
 MIT
