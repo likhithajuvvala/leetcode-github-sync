@@ -1,0 +1,32 @@
+name: Sync LeetCode
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Configure git (commit as the repo owner)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          ID=$(gh api "users/$OWNER" --jq .id)
+          git config user.name "$OWNER"
+          git config user.email "${ID}+${OWNER}@users.noreply.github.com"
+      - name: Sync submissions
+        env:
+          LEETCODE_SESSION: ${{ secrets.LEETCODE_SESSION }}
+          LEETCODE_CSRF: ${{ secrets.LEETCODE_CSRF }}
+        run: python leetcode_sync.py --push
